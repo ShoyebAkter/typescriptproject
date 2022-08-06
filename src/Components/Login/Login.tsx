@@ -22,6 +22,7 @@ const Login: FC=()=> {
     return <p>Loading...</p>;
   }
   
+  
   const handleRegister = async (event:any) => {
         
     event.preventDefault();
