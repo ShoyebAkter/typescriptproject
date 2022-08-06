@@ -1,18 +1,14 @@
 import React from 'react';
 import './App.css';
-import Login from './Components/Login/Login';
 import Home from './Components/Home/Home';
 import {Route, Routes} from 'react-router-dom'
+import Login from './Components/Login/Login';
 
 const App: React.FunctionComponent=()=> {
   return (
     <div >
+      <Home/>
       <Login/>
-      {/* <Routes>
-        <Route path={'/'} element={<Home/>}/>
-      </Routes> */}
-      
-      
     </div>
   );
 }

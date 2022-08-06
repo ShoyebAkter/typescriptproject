@@ -1,39 +1,39 @@
-import React from 'react'
-import auth from '../../firebase.init';
+import React, { FC } from 'react'
+import auth from '../../firebase';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
 
+const Login: FC=()=> {
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
 
+  console.log(user);
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error.message}</p>
+      </div>
+    );
+  }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+  
+  const handleRegister = async (event:any) => {
+        
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    
 
-const Login: React.FunctionComponent=()=> {
-
-    // const navigate = useNavigate();
-    const [
-        createUserWithEmailAndPassword,
-        user ,
-        loading,
-        error,
-      ] = useCreateUserWithEmailAndPassword(auth);
-
-      if (error) {
-        return (
-          <div>
-            <p>Error: {error.message}</p>
-          </div>
-        );
-      }
-      if (loading) {
-        return <p>Loading...</p>;
-      }
-
-      const handleRegister=async(event:any)=>{
-        event.preventDefault();
-        const email:string=event.target.email.value;
-        const password:string=event.target.password.value;
-        await createUserWithEmailAndPassword(email, password)
-        // navigate('/')
-        console.log("create user done");
-      }
+    await createUserWithEmailAndPassword(email, password);
+    
+    // 
+}
 
   return (
     <div>
