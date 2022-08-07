@@ -6,10 +6,12 @@ import GetData from '../GetData/GetData';
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
+  console.log(user);
   return (
     <div>
       {
         user ? <div>
+          <div>{user.email}</div>
           <AddData/>
           <GetData/>
         </div> :

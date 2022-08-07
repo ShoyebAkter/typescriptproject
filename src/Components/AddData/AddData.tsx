@@ -3,15 +3,16 @@ import { collection, addDoc, getFirestore } from "firebase/firestore";
 import {  getDocs } from "firebase/firestore";
 
 export default function AddData() {
+
     const db = getFirestore()
     
-
     const handleRegister = async (event: any) => {
         event.preventDefault();
         const docRef = await addDoc(collection(db, "db"), {
             name: event.target.name.value,
             date: event.target.date.value
-        });    
+        });   
+        
     }
 
 
