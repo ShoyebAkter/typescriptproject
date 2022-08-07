@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
-import auth from '../../firebase';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { getAuth } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const Login: FC=()=> {
   const [

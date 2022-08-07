@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import auth from '../../firebase';
+import { auth } from '../../firebase';
 import AddData from '../AddData/AddData';
 import GetData from '../GetData/GetData';
 

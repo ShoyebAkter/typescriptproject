@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { collection,getFirestore,getDocs } from "firebase/firestore";
+import IDataType from '../../types/datatype';
 
 
 
 
 export default function GetData() {
     const [data,setData] = useState<
-    Array<{
-        name: string,
-        date: string
-    }>
+    Array<IDataType>
 >([]);
     const db = getFirestore()
     const showData=async()=>{
