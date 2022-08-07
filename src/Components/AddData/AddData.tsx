@@ -6,39 +6,13 @@ import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
 
 export default function AddData() {
     const [imageList,setImageList]=useState<string[]>([])
-    const [imageUrl,setImageUrl]=useState<string>("")
+    const [imageUrl,setImageUrl]=useState<string|null>(null)
     const db = getFirestore()
     const imageRef=ref(storage,"images/");
     // console.log(imageRef);
     const handleRegister = async (event: any) => {
         event.preventDefault(); 
         
-        // listAll(imageRef).then(res=>{
-        //     res.items.forEach(item=>{
-        //         getDownloadURL(item).then((url)=>{
-        //             setImageList((prev)=>[...prev,url])
-        //         })
-        //     })
-        // })
-
-        // imageList.map(image=>setImageUrl(image))
-        // console.log(imageUrl);
-
-        const docRef = await addDoc(collection(db, "db"), {
-            name: event.target.name.value,
-            date: event.target.date.value,
-            
-        }); 
-    }
-
-    const handleFile=async(e:any)=>{
-           const image=e.target.files[0];
-           const imageStorageRef=ref(storage,`images/${image}`);
-           uploadBytes(imageStorageRef,image).then(()=>{
-            alert("image uploaded")
-           })
-    }
-    useEffect(()=>{
         listAll(imageRef).then(res=>{
             res.items.forEach(item=>{
                 getDownloadURL(item).then((url)=>{
@@ -46,11 +20,26 @@ export default function AddData() {
                 })
             })
         })
-        console.log(imageList)
-        imageList.map(image=>setImageUrl(image))
-        console.log(imageUrl); 
-    },[])
 
+        
+        const docRef = await addDoc(collection(db, "users"), {
+            date: event.target.date.value,
+            image: imageUrl,
+            name: event.target.name.value
+        }); 
+    }
+
+    const handleFile=async(e:any)=>{
+           const image=e.target.files[0];
+           const imageStorageRef=ref(storage,`images/${image.name}`);
+           uploadBytes(imageStorageRef,image).then(()=>{
+            alert("image uploaded")
+           })
+    }
+    useEffect(()=>{
+        
+    },[])
+    
     
 
     return (
