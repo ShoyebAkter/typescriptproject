@@ -7,8 +7,10 @@ import Login from './Components/Login/Login';
 const App: React.FunctionComponent=()=> {
   return (
     <div >
-      <Home/>
-      <Login/>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='login' element={<Login/>}/>
+      </Routes>
     </div>
   );
 }
