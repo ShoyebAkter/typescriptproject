@@ -50,7 +50,7 @@ export default function AddData() {
                 <input
                     className='w-50 mx-auto btn btn-primary mt-2'
                     type="submit"
-                    value="Register" />
+                    value="Add" />
             </form>
         </div>
     )

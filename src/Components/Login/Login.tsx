@@ -1,21 +1,20 @@
 import React, { FC } from 'react'
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login: FC = () => {
+  
   const [
-    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
     user,
     loading,
     error,
-  ] = useCreateUserWithEmailAndPassword(auth);
-
+  ] = useSignInWithEmailAndPassword(auth);
   const navigate = useNavigate();
 
-  console.log(user);
+  // console.log(user);
   if (error) {
     return (
       <div>
@@ -27,27 +26,22 @@ const Login: FC = () => {
     return <p>Loading...</p>;
   }
 
-
   const handleRegister = async (event: any) => {
 
     event.preventDefault();
-    const name = event.target.name.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
+    
 
-
-    await createUserWithEmailAndPassword(email, password);
+    await signInWithEmailAndPassword(email, password);
     console.log(user);
-    // await updateProfile({ displayName: name });
-
+        navigate('/')
     // 
   }
-
   return (
     <div className='container w-50 mx-auto'>
       <h2 style={{ textAlign: 'center' }}>Please Register</h2>
       <form onSubmit={handleRegister}>
-        <input type="text" name="name" id="" placeholder='Your Name' /><br/>
 
         <input type="email" name="email" id="" placeholder='Email Address' required /><br/>
 
@@ -55,9 +49,9 @@ const Login: FC = () => {
         <input
           className='w-50 mx-auto btn btn-primary mt-2'
           type="submit"
-          value="Register" />
+          value="Login" />
       </form>
-      
+      <p>Don't have an account <Link to="/register" className='text-primary pe-auto text-decoration-none' >Please Register</Link> </p>
     </div>
   )
 }

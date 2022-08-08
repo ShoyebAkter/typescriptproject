@@ -10,7 +10,6 @@ export default function Home() {
   console.log(user);
   return (
     <div>
-      <Header/>
       {
         user ? <div>
           <div>{user.email}</div>
