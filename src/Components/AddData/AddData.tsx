@@ -2,25 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 import {  getDocs } from "firebase/firestore";
 import { app, storage } from '../../firebase';
-import { getDownloadURL, listAll, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, listAll, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 
 export default function AddData() {
     const [imageList,setImageList]=useState<string[]>([])
-    const [imageUrl,setImageUrl]=useState<string|null>(null)
+    const [imageUrl,setImageUrl]=useState<string>("")
     const db = getFirestore()
     const imageRef=ref(storage,"images/");
     // console.log(imageRef);
     const handleRegister = async (event: any) => {
         event.preventDefault(); 
-        
-        listAll(imageRef).then(res=>{
-            res.items.forEach(item=>{
-                getDownloadURL(item).then((url)=>{
-                    setImageList((prev)=>[...prev,url])
-                })
-            })
-        })
-
         
         const docRef = await addDoc(collection(db, "users"), {
             date: event.target.date.value,
@@ -32,9 +23,16 @@ export default function AddData() {
     const handleFile=async(e:any)=>{
            const image=e.target.files[0];
            const imageStorageRef=ref(storage,`images/${image.name}`);
-           uploadBytes(imageStorageRef,image).then(()=>{
-            alert("image uploaded")
-           })
+           const uploadData=uploadBytesResumable(imageStorageRef,image)
+        uploadData.on(
+            "state_changed",
+            ()=>{
+                getDownloadURL(uploadData.snapshot.ref)
+                .then(url=>setImageUrl(url))
+            }
+        )
+
+        console.log(imageUrl)
     }
     useEffect(()=>{
         

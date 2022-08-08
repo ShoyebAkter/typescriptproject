@@ -11,11 +11,11 @@ export default function GetData() {
 >([]);
     const db = getFirestore()
     const showData=async()=>{
-        const querySnapshot =await getDocs(collection(db, "db"));
+        const querySnapshot =await getDocs(collection(db, "users"));
         // console.log(querySnapshot)
         querySnapshot.forEach((doc) => {
             let dataObj=doc.data();
-            setData(prev=>[...prev,{name:doc.data().name,date:doc.data().date}]);
+            setData(prev=>[...prev,{name:doc.data().name,date:doc.data().date,image:doc.data().image}]);
             
         });
     }
@@ -32,6 +32,7 @@ export default function GetData() {
                         <div>
                         <div>{singleData.name}</div>    
                         <div>{singleData.date}</div>
+                        <img style={{height:"120px",width:"140px"}} src={singleData.image} alt=""/>
                         </div>
                         
                     )
