@@ -14,8 +14,8 @@ export default function Header() {
     <div>
         <nav>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <a href="/login">Login</a>}</li>
+        <li><Link to="/">Home</Link></li>
+        <li>{user ? <button className="btn btn-ghost" onClick={logout} >Sign Out</button> : <Link to="/login">Login</Link>}</li>
       </ul>
     </nav>
     </div>
