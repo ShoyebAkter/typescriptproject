@@ -12,10 +12,9 @@ export default function AddData() {
         const target = event.target as typeof event.target & {
             date: { value: string };
             name: { value: string };
-            image: {value:string};
         };
         
-        const docRef = await addDoc(collection(db, "users"), {
+        await addDoc(collection(db, "users"), {
             date: target.date.value,
             image: imageUrl,
             name: target.name.value
@@ -25,17 +24,17 @@ export default function AddData() {
     const handleFile=async(e:any)=>{
            const image=e.target.files[0];
            const imageStorageRef=ref(storage,`images/${image.name}`);
-           const uploadData=uploadBytesResumable(imageStorageRef,image)
-           uploadData.on(
-            "state_changed",
+           const uploadData=uploadBytesResumable(imageStorageRef,image).then(
             ()=>{
-                getDownloadURL(uploadData.snapshot.ref)
+                getDownloadURL(imageStorageRef)
                 .then(url=>setImageUrl(url))
             }
-        )
+           )
 
         console.log(imageUrl)
     }
+
+    
     return (
         <div>
             <form onSubmit={handleRegister}>
@@ -48,6 +47,7 @@ export default function AddData() {
                     type="submit"
                     value="Add" />
             </form>
+            
         </div>
     )
 }
