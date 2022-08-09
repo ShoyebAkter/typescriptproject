@@ -8,15 +8,23 @@ import Header from './Header';
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
   // console.log(user);
+  if (loading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
   return (
     <div>
       {
-        user ? <div>
-          <div>{user.email}</div>
-          <AddData/>
-          <GetData/>
-        </div> :
-         <div>Please login or create an account</div>
+        user ?
+          <div>
+            <div>{user.email}</div>
+            <AddData />
+          </div>
+          :
+          <div>Please login or create an account</div>
       }
     </div>
   )

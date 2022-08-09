@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import React, { useEffect, useState } from 'react'
+import { collection, addDoc, getFirestore, getDocs } from "firebase/firestore";
 import { app, storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import IDataType from '../../types/datatype';
+import GetData from '../GetData/GetData';
 
 export default function AddData() {
     const [imageUrl,setImageUrl]=useState<string>("")
+    const [data,setData] = useState<
+    Array<IDataType>
+>([]);
     const db = getFirestore()
     // console.log(imageRef);
     const handleRegister = async (event: React.SyntheticEvent) => {
@@ -33,12 +38,22 @@ export default function AddData() {
 
         console.log(imageUrl)
     }
-
+    useEffect(()=>{
+        const showData=async()=>{
+            const querySnapshot =await getDocs(collection(db, "users"));
+            // console.log(querySnapshot)
+            querySnapshot.forEach((doc) => {
+                setData(prev=>[...prev,{name:doc.data().name,date:doc.data().date,image:doc.data().image}]);
+                
+            });
+        }
+        showData()
+    },[])
     
     return (
         <div>
             <form onSubmit={handleRegister}>
-                <input type="text" name="name" id="" placeholder='Your Name' /><br/>
+                <input type="text" name="name" id="" placeholder='Book Name' /><br/>
 
                 <input type="file" onChange={handleFile}/><br/>
                 <input type="date" name="date" id=""  required /><br/>
@@ -47,7 +62,7 @@ export default function AddData() {
                     type="submit"
                     value="Add" />
             </form>
-            
+            <GetData data={data}/>
         </div>
     )
 }

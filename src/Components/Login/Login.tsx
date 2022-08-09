@@ -33,9 +33,10 @@ const Login: FC = () => {
 
     await signInWithEmailAndPassword(email, password);
     console.log(user);
-        navigate('/')
-      
     // 
+  }
+  if(user){
+    navigate('/')
   }
   return (
     <div className='container w-50 mx-auto'>
