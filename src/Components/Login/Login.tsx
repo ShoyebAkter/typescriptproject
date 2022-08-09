@@ -13,14 +13,12 @@ const Login: FC = () => {
     error,
   ] = useSignInWithEmailAndPassword(auth);
   const navigate = useNavigate();
-
+  let errorText;
   // console.log(user);
   if (error) {
-    return (
-      <div>
-        <p>Error: {error.message}</p>
-      </div>
-    );
+    errorText=<div>
+    <p className='text-danger'>Error: {error?.message}</p>
+  </div>
   }
   if (loading) {
     return <p>Loading...</p>;
@@ -36,11 +34,12 @@ const Login: FC = () => {
     await signInWithEmailAndPassword(email, password);
     console.log(user);
         navigate('/')
+      
     // 
   }
   return (
     <div className='container w-50 mx-auto'>
-      <h2 style={{ textAlign: 'center' }}>Please Register</h2>
+      <h2 style={{ textAlign: 'center' }}>Please Login</h2>
       <form onSubmit={handleRegister}>
 
         <input type="email" name="email" id="" placeholder='Email Address' required /><br/>
@@ -51,6 +50,7 @@ const Login: FC = () => {
           type="submit"
           value="Login" />
       </form>
+      {errorText}
       <p>Don't have an account <Link to="/register" className='text-primary pe-auto text-decoration-none' >Please Register</Link> </p>
     </div>
   )

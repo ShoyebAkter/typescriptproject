@@ -10,7 +10,7 @@ export default function SignUp() {
         loading,
         error,
       ] = useCreateUserWithEmailAndPassword(auth);
-      const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+      const [updateProfile] = useUpdateProfile(auth);
       const navigate = useNavigate();
     
       console.log(user);
@@ -24,9 +24,6 @@ export default function SignUp() {
       if (loading) {
         return <p>Loading...</p>;
       }
-    const navigateLogin=()=>{
-        navigate('/login')
-    }
     
       const handleRegister = async (event: any) => {
     
@@ -56,6 +53,7 @@ export default function SignUp() {
           type="submit"
           value="Register" />
       </form>
+      {error && <p>{error}</p>}
       <p>Already have an account <Link to="/login" className='text-primary pe-auto text-decoration-none' >Please Login</Link> </p>
     </div>
   )

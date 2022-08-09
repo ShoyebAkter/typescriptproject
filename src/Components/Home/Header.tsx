@@ -7,7 +7,7 @@ import { auth } from '../../firebase'
 export default function Header() {
     const [user]=useAuthState(auth);
     const navigate=useNavigate()
-    const logout=()=>{
+    const logout=():void=>{
         signOut(auth);
         navigate('/login')
     }

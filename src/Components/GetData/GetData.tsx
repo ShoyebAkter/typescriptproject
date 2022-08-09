@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { collection,getFirestore,getDocs } from "firebase/firestore";
 import IDataType from '../../types/datatype';
 
-
-
-
 export default function GetData() {
     const [data,setData] = useState<
     Array<IDataType>
@@ -14,31 +11,31 @@ export default function GetData() {
         const querySnapshot =await getDocs(collection(db, "users"));
         // console.log(querySnapshot)
         querySnapshot.forEach((doc) => {
-            let dataObj=doc.data();
             setData(prev=>[...prev,{name:doc.data().name,date:doc.data().date,image:doc.data().image}]);
             
         });
     }
-
-    
     
     return (
         <div>
-            <button onClick={showData}>Show</button>
-            {
+            <button className='mt-5' onClick={showData}>Show Data</button>
+            
+            <div style={{display:"grid", gridTemplateColumns:"repeat(3,1fr)"}}>{
                 data ?
-                data.map(singleData=>{
+                data.map((singleData,index)=>{
                     return(
-                        <div>
-                        <div>{singleData.name}</div>    
-                        <div>{singleData.date}</div>
+                        <div  key={index}>
+                        <div>Name: {singleData.name}</div>    
+                        <div>Date: {singleData.date}</div>
                         <img style={{height:"120px",width:"140px"}} src={singleData.image} alt=""/>
+                    
                         </div>
                         
                     )
                 })
                 : <div>No data</div>
             }
+            </div>
         </div>
     )
 }

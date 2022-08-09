@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { collection, addDoc, getFirestore } from "firebase/firestore";
-import {  getDocs } from "firebase/firestore";
 import { app, storage } from '../../firebase';
-import { getDownloadURL, listAll, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
 export default function AddData() {
-    const [imageList,setImageList]=useState<string[]>([])
     const [imageUrl,setImageUrl]=useState<string>("")
     const db = getFirestore()
-    const imageRef=ref(storage,"images/");
     // console.log(imageRef);
-    const handleRegister = async (event: any) => {
+    const handleRegister = async (event: React.SyntheticEvent) => {
         event.preventDefault(); 
+        const target = event.target as typeof event.target & {
+            date: { value: string };
+            name: { value: string };
+            image: {value:string};
+        };
         
         const docRef = await addDoc(collection(db, "users"), {
-            date: event.target.date.value,
+            date: target.date.value,
             image: imageUrl,
-            name: event.target.name.value
+            name: target.name.value
         }); 
     }
 
@@ -24,7 +26,7 @@ export default function AddData() {
            const image=e.target.files[0];
            const imageStorageRef=ref(storage,`images/${image.name}`);
            const uploadData=uploadBytesResumable(imageStorageRef,image)
-        uploadData.on(
+           uploadData.on(
             "state_changed",
             ()=>{
                 getDownloadURL(uploadData.snapshot.ref)
@@ -34,21 +36,15 @@ export default function AddData() {
 
         console.log(imageUrl)
     }
-    useEffect(()=>{
-        
-    },[])
-    
-    
-
     return (
         <div>
             <form onSubmit={handleRegister}>
-                <input type="text" name="name" id="" placeholder='Your Name' />
+                <input type="text" name="name" id="" placeholder='Your Name' /><br/>
 
-                <input type="file" onChange={handleFile}/>
-                <input type="date" name="date" id=""  required />
+                <input type="file" onChange={handleFile}/><br/>
+                <input type="date" name="date" id=""  required /><br/>
                 <input
-                    className='w-50 mx-auto btn btn-primary mt-2'
+                    className=' mx-auto btn btn-primary mt-2'
                     type="submit"
                     value="Add" />
             </form>

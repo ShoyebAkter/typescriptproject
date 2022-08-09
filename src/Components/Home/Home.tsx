@@ -7,7 +7,7 @@ import Header from './Header';
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
-  console.log(user);
+  // console.log(user);
   return (
     <div>
       {
@@ -16,7 +16,7 @@ export default function Home() {
           <AddData/>
           <GetData/>
         </div> :
-         <div>Home</div>
+         <div>Please login or create an account</div>
       }
     </div>
   )
