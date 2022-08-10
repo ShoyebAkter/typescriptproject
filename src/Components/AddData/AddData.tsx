@@ -12,7 +12,7 @@ const AddData:React.FunctionComponent=()=> {
 >([]);
     const db = getFirestore()
     // console.log(imageRef);
-    const handleRegister = async (event: React.SyntheticEvent) => {
+    const handleRegister = async (event: React.SyntheticEvent):Promise<void> => {
         event.preventDefault(); 
         const target = event.target as typeof event.target & {
             date: { value: string };
@@ -27,19 +27,21 @@ const AddData:React.FunctionComponent=()=> {
         alert("data added successfully")
     }
 
-    const handleFile=async(e:any)=>{
+    const handleFile=async(e:any):Promise<void>=>{
            const image=e.target.files[0];
            const imageStorageRef=ref(storage,`images/${image.name}`);
-           const uploadData=uploadBytesResumable(imageStorageRef,image).then(
+           uploadBytesResumable(imageStorageRef,image).then(
             ()=>{
                 getDownloadURL(imageStorageRef)
                 .then(url=>setImageUrl(url))
             }
            )
     }
+
     console.log(imageUrl);
+
     useEffect(()=>{
-        const showData=async()=>{
+        const showData=async():Promise<void>=>{
             const querySnapshot =await getDocs(collection(db, "users"));
             // console.log(querySnapshot)
             querySnapshot.forEach((doc) => {

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { collection,getFirestore,getDocs } from "firebase/firestore";
+import React from 'react'
 import IDataType from '../../types/datatype';
 
-type GetDataProps={
+interface GetDataProps{
     data: IDataType[]
 }
 
-export default function GetData({data}:GetDataProps) {
+const GetData:React.FunctionComponent<GetDataProps>=({data})=> {
        
     return (
         <div>
             
-            <div style={{display:"grid", gridTemplateColumns:"repeat(3,1fr)"}}>{
+            <div style={{display:"grid", gridTemplateColumns:"repeat(3,1fr)"}}>
+                {
                 data ?
                 data.map((singleData,index)=>{
                     return(
@@ -30,3 +30,4 @@ export default function GetData({data}:GetDataProps) {
         </div>
     )
 }
+export default GetData
