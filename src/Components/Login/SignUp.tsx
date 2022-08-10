@@ -2,8 +2,9 @@ import React from 'react'
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../../firebase';
+import { ISignUpType } from '../../types/signuptype';
 
-export default function SignUp() {
+ const SignUp:React.FunctionComponent=()=> {
     const [
         createUserWithEmailAndPassword,
         user,
@@ -25,12 +26,14 @@ export default function SignUp() {
         return <p>Loading...</p>;
       }
     
-      const handleRegister = async (event: any) => {
+      const handleRegister = async (event: React.SyntheticEvent) => {
     
         event.preventDefault();
-        const name = event.target.name.value;
-        const email = event.target.email.value;
-        const password = event.target.password.value;
+        
+        const target = event.target as typeof event.target & ISignUpType;
+        const name:string = target.name.value;
+        const email:string = target.email.value;
+        const password:string = target.password.value;
         
     
         await createUserWithEmailAndPassword(email, password);
@@ -58,3 +61,4 @@ export default function SignUp() {
     </div>
   )
 }
+export default SignUp

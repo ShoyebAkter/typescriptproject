@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth } from '../../firebase'
 
-export default function Header() {
+const Header:React.FunctionComponent=()=> {
   const [user] = useAuthState(auth);
   const navigate = useNavigate()
   const logout = (): void => {
@@ -27,3 +27,4 @@ export default function Header() {
     </div>
   )
 }
+export default Header

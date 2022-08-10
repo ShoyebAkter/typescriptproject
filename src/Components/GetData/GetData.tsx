@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { collection,getFirestore,getDocs } from "firebase/firestore";
 import IDataType from '../../types/datatype';
 
-interface GetDataProps{
+type GetDataProps={
     data: IDataType[]
 }
 

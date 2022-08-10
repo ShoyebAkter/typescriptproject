@@ -5,7 +5,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import IDataType from '../../types/datatype';
 import GetData from '../GetData/GetData';
 
-export default function AddData() {
+const AddData:React.FunctionComponent=()=> {
     const [imageUrl,setImageUrl]=useState<string>("")
     const [data,setData] = useState<
     Array<IDataType>
@@ -55,7 +55,7 @@ export default function AddData() {
             <form onSubmit={handleRegister}>
                 <input type="text" name="name" id="" placeholder='Book Name' /><br/>
 
-                <input type="file" onChange={handleFile}/><br/>
+                <input type="file" onChange={e=>handleFile(e)}/><br/>
                 <input type="date" name="date" id=""  required /><br/>
                 <input
                     className=' mx-auto btn btn-primary mt-2'
@@ -66,5 +66,5 @@ export default function AddData() {
         </div>
     )
 }
-
+export default AddData
 

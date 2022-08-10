@@ -5,7 +5,7 @@ import AddData from '../AddData/AddData';
 import GetData from '../GetData/GetData';
 import Header from './Header';
 
-export default function Home() {
+const Home:React.FunctionComponent=()=> {
   const [user, loading, error] = useAuthState(auth);
   // console.log(user);
   if (loading) {
@@ -29,3 +29,4 @@ export default function Home() {
     </div>
   )
 }
+export default Home

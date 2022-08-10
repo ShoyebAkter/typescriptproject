@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase';
-import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
+import { ILoginType } from '../../types/logintype';
+import Social from './Social';
 
-const Login: FC = () => {
+const Login: React.FunctionComponent = () => {
   
   const [
     signInWithEmailAndPassword,
@@ -24,12 +25,12 @@ const Login: FC = () => {
     return <p>Loading...</p>;
   }
 
-  const handleRegister = async (event: any) => {
+  const handleLogin = async (event: React.SyntheticEvent) => {
 
     event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    
+    const target = event.target as typeof event.target & ILoginType;
+    const email:string = target.email.value;
+    const password:string = target.password.value;
 
     await signInWithEmailAndPassword(email, password);
     console.log(user);
@@ -41,7 +42,7 @@ const Login: FC = () => {
   return (
     <div className='container w-50 mx-auto'>
       <h2 style={{ textAlign: 'center' }}>Please Login</h2>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleLogin}>
 
         <input type="email" name="email" id="" placeholder='Email Address' required /><br/>
 
@@ -53,6 +54,7 @@ const Login: FC = () => {
       </form>
       {errorText}
       <p>Don't have an account <Link to="/register" className='text-primary pe-auto text-decoration-none' >Please Register</Link> </p>
+      <Social/>
     </div>
   )
 }
