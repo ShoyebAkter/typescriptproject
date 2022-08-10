@@ -18,12 +18,13 @@ const AddData:React.FunctionComponent=()=> {
             date: { value: string };
             name: { value: string };
         };
-        
+       
         await addDoc(collection(db, "users"), {
             date: target.date.value,
             image: imageUrl,
             name: target.name.value
         }); 
+        alert("data added successfully")
     }
 
     const handleFile=async(e:any)=>{
@@ -35,9 +36,8 @@ const AddData:React.FunctionComponent=()=> {
                 .then(url=>setImageUrl(url))
             }
            )
-
-        console.log(imageUrl)
     }
+    console.log(imageUrl);
     useEffect(()=>{
         const showData=async()=>{
             const querySnapshot =await getDocs(collection(db, "users"));
