@@ -19,8 +19,7 @@ const Home:React.FunctionComponent=()=> {
     <div>
       {
         user ?
-          <div>
-            <div>{user.email}</div>
+          <div className='mx-5'>
             <AddData />
           </div>
           :

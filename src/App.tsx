@@ -5,8 +5,9 @@ import {Route, Routes} from 'react-router-dom'
 import Login from './Components/Login/Login';
 import Header from './Components/Home/Header';
 import SignUp from './Components/Login/SignUp';
+import ResetPassword from './Components/Login/ResetPassword';
 
-const App: React.FunctionComponent=()=> {
+const App: React.FunctionComponent=():JSX.Element=> {
   return (
     <div >
       <Header/>
@@ -14,6 +15,7 @@ const App: React.FunctionComponent=()=> {
         <Route path='/' element={<Home/>}/>
         <Route path='login' element={<Login/>}/>
         <Route path='/register' element={<SignUp/>}></Route>
+        <Route path='/resetpassword' element={<ResetPassword/>}></Route>
       </Routes>
     </div>
   );

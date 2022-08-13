@@ -6,6 +6,7 @@ import { auth } from '../../firebase'
 
 const Header:React.FunctionComponent=()=> {
   const [user] = useAuthState(auth);
+  console.log(user);
   const navigate = useNavigate()
   const logout = (): void => {
     signOut(auth);
@@ -19,7 +20,7 @@ const Header:React.FunctionComponent=()=> {
           <li>{
             !user ? <Link style={{textDecoration:"none",color:"white"}} to="/login">Login</Link>
               :
-              <button className="btn btn-ghost bg-white" onClick={logout} >Sign Out</button>
+              <button className="btn btn-ghost text-white" onClick={logout} >Sign Out</button>
           }
           </li>
         </ul>
